@@ -27,11 +27,13 @@ func clearTerminal() {
 
 // show help options
 func showHelp() {
-	fmt.Println("help - show all avaliable options")
-	fmt.Println("add - add a note")
-	fmt.Println("edit - edit the note")
-	fmt.Println("remove - remove the note")
-	fmt.Println("exit - exit the program")
+	fmt.Println("------------------------")
+	fmt.Println("All commands")
+	fmt.Println(" > help - show all avaliable options")
+	fmt.Println(" > add - add a note")
+	fmt.Println(" > edit - edit the note")
+	fmt.Println(" > delete - remove the note")
+	fmt.Println(" > exit - exit the program")
 }
 
 func main() {
@@ -39,7 +41,7 @@ func main() {
 	reader := bufio.NewReader(os.Stdin)
 	notes := []Note{}
 
-	for true {
+	for {
 		command := ""
 
 		// show realtime exist note
@@ -66,21 +68,31 @@ func main() {
 		if command == "help" {
 			showHelp()
 			helpCommand := ""
-			fmt.Println("Enter e to exit help menu")
-			for helpCommand != "e" {
+			for helpCommand != "exit" {
+				fmt.Println("Enter exit to exit help menu: ")
 				fmt.Scanln(&helpCommand)
 			}
+			clearTerminal()
+			continue
 		} else if command == "add" {
-			fmt.Println("Enter note content here: ")
+			fmt.Println("Enter note content here (Enter x to cancel): ")
 			content, _ := reader.ReadString('\n')
 			content = strings.TrimSpace(content)
+			if content == "x" {
+				clearTerminal()
+				continue
+			}
 			notes = append(notes, Note{Content: content})
 		} else if command == "edit" {
 			if len(notes) != 0 {
 				newNotes := []Note{}
 				editId := 0
-				fmt.Println("Enter id of note that you want to edit: ")
+				fmt.Println("Enter id of note that you want to edit (Enter 0 to cancel): ")
 				fmt.Scanln(&editId)
+				if editId == 0 {
+					clearTerminal()
+					continue
+				}
 				fmt.Println("Enter new content: ")
 				newContent, _ := reader.ReadString('\n') 
 				newContent = strings.TrimSpace(newContent)
@@ -95,12 +107,16 @@ func main() {
 					notes = newNotes
 				}
 			}
-		} else if command == "remove" {
+		} else if command == "delete" {
 			if len(notes) != 0 {
 				newNotes := []Note{}
 				removeId := 0
-				fmt.Println("Enter id of note that you want to remove: ")
+				fmt.Println("Enter id of note that you want to remove (Enter 0 to cancel): ")
 				fmt.Scanln(&removeId)
+				if removeId == 0 {
+					clearTerminal()
+					continue
+				}
 				if removeId != 0 {
 					for i, note := range notes {
 						if i + 1 != removeId {
@@ -117,6 +133,7 @@ func main() {
 			clearTerminal()
 			break
 		} else {
+			clearTerminal()
 			continue
 		}
 
