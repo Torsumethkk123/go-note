@@ -28,7 +28,8 @@ func clearTerminal() {
 
 // loaded data when start program
 func loadedData() []string {
-	file, err := os.Open("./software/saved.txt")
+	dir, _ := os.Getwd()
+	file, err := os.Open(dir + "/software/saved.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -46,7 +47,8 @@ func loadedData() []string {
 // saved data when exit program
 func savedData(data []Note) {
 	if len(data) != 0 {
-		file, err := os.Create("./software/saved.txt")
+		dir, _ := os.Getwd()
+		file, err := os.Create(dir + "/software/saved.txt")
 		if err != nil {
 			panic(err)
 		}
@@ -76,7 +78,8 @@ func showHelp() {
 func main() {
 	// setup
 	reader := bufio.NewReader(os.Stdin)
-	_, err := os.Stat("./software/saved.txt")
+	dir, _ := os.Getwd()
+	_, err := os.Stat(dir + "/software/saved.txt")
 	notes := []Note{}
 
 	if err == nil {
