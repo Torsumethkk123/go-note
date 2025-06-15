@@ -5,7 +5,6 @@ A simple software for manage note.
 ## 📦 Features.
 
 - Add, Edit, Delete note.
-- Save system using text file.
 
 ## 🏃‍♂️ How to run.
 
