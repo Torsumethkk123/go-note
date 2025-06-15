@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
@@ -29,10 +28,7 @@ func clearTerminal() {
 
 // loaded data when start program
 func loadedData() []string {
-	exePath, _ := os.Executable()
-	exeDir := filepath.Dir(exePath)
-	filePath := filepath.Join(exeDir, "saved.txt")
-	file, err := os.Open(filePath)
+	file, err := os.Open("./software/saved.txt")
 	if err != nil {
 		panic(err)
 	}
@@ -48,12 +44,9 @@ func loadedData() []string {
 }
 
 // saved data when exit program
-func savedData(data []Note) string {
+func savedData(data []Note) {
 	if len(data) != 0 {
-		exePath, _ := os.Executable()
-		exeDir := filepath.Dir(exePath)
-		filePath := filepath.Join(exeDir, "saved.txt")
-		file, err := os.Create(filePath)
+		file, err := os.Create("./software/saved.txt")
 		if err != nil {
 			panic(err)
 		}
@@ -66,9 +59,7 @@ func savedData(data []Note) string {
 			}
 			file.WriteString(note.Content + "¿")
 		}
-		return filePath
 	}
-	return ""
 }
 
 // show help options
@@ -85,10 +76,7 @@ func showHelp() {
 func main() {
 	// setup
 	reader := bufio.NewReader(os.Stdin)
-	exePath, _ := os.Executable()
-	exeDir := filepath.Dir(exePath)
-	filePath := filepath.Join(exeDir, "saved.txt")
-	_, err := os.Stat(filePath)
+	_, err := os.Stat("./software/saved.txt")
 	notes := []Note{}
 
 	if err == nil {
@@ -189,7 +177,6 @@ func main() {
 			fmt.Println("Program is ended.")
 			clearTerminal()
 			savedData(notes)
-			fmt.Println(savedData(notes))
 			break
 		} else {
 			clearTerminal()
