@@ -4,11 +4,25 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"os/exec"
+	"runtime"
 	"strconv"
+	"strings"
 )
 
 type Note struct {
 	Content string
+}
+
+func clearTerminal() {
+	var cmd *exec.Cmd
+	if runtime.GOOS == "windows" {
+		cmd = exec.Command("cmd", "/c", "cls")
+	} else {
+		cmd = exec.Command("clear")
+	}
+	cmd.Stdout = os.Stdout
+	cmd.Run()
 }
 
 // show help options
@@ -59,6 +73,7 @@ func main() {
 		} else if command == "add" {
 			fmt.Println("Enter note content here: ")
 			content, _ := reader.ReadString('\n')
+			content = strings.TrimSpace(content)
 			notes = append(notes, Note{Content: content})
 		} else if command == "edit" {
 			if len(notes) != 0 {
@@ -68,6 +83,7 @@ func main() {
 				fmt.Scanln(&editId)
 				fmt.Println("Enter new content: ")
 				newContent, _ := reader.ReadString('\n') 
+				newContent = strings.TrimSpace(newContent)
 				if editId != 0 {
 					for i, note := range notes {
 						if i + 1 != editId {
@@ -98,9 +114,12 @@ func main() {
 			}
 		} else if command == "exit" {
 			fmt.Println("Program is ended.")
+			clearTerminal()
 			break
 		} else {
 			continue
 		}
+
+		clearTerminal()
 	}
 }
