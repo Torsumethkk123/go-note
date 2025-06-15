@@ -24,8 +24,9 @@ Now Project Structure could be like this.
 
 ```
 my-project/
+├── software
+│   └── go-note.exe
 ├── README.md
-├── go-note.exe
 ├── go.mod
 ├── main.go
  ```
