@@ -10,7 +10,7 @@ A simple software for manage note.
 ## 🏃‍♂️ How to run.
 
 ### First Method : Download file and run exe file.
-- Download file and open folder.
+- Download file and open folder named ```software```.
 - Run ```go-note.exe```.
 
 ### Second Method : Download file and open folder in Vscode or other text editor.
@@ -23,9 +23,10 @@ After download this we ready to start.
 Now Project Structure could be like this.
 
 ```
-my-project/
+foldername/
+├── software
+│   └── go-note.exe
 ├── README.md
-├── go-note.exe
 ├── go.mod
 ├── main.go
  ```
