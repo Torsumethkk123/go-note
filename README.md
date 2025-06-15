@@ -23,7 +23,7 @@ After download this we ready to start.
 Now Project Structure could be like this.
 
 ```
-my-project/
+foldername/
 ├── software
 │   └── go-note.exe
 ├── README.md
