@@ -10,7 +10,7 @@ A simple software for manage note.
 ## 🏃‍♂️ How to run.
 
 ### First Method : Download file and run exe file.
-- Download file and open folder.
+- Download file and open folder named ```software```.
 - Run ```go-note.exe```.
 
 ### Second Method : Download file and open folder in Vscode or other text editor.
