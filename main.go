@@ -14,6 +14,7 @@ type Note struct {
 	Content string
 }
 
+// function to clear terminal
 func clearTerminal() {
 	var cmd *exec.Cmd
 	if runtime.GOOS == "windows" {
@@ -23,6 +24,42 @@ func clearTerminal() {
 	}
 	cmd.Stdout = os.Stdout
 	cmd.Run()
+}
+
+// loaded data when start program
+func loadedData() []string {
+	file, err := os.Open("./software/saved.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+
+	for scanner.Scan() {
+		line := scanner.Text()
+		return strings.Split(line, "¿")
+	}
+	return []string{}
+}
+
+// saved data when exit program
+func savedData(data []Note) {
+	if len(data) != 0 {
+		file, err := os.Create("./software/saved.txt")
+		if err != nil {
+			panic(err)
+		}
+		defer file.Close()
+
+		for i, note := range data {
+			if i == len(data) - 1 {
+				file.WriteString(note.Content)
+				continue
+			}
+			file.WriteString(note.Content + "¿")
+		}
+	}
 }
 
 // show help options
@@ -39,7 +76,15 @@ func showHelp() {
 func main() {
 	// setup
 	reader := bufio.NewReader(os.Stdin)
+	_, err := os.Stat("./software/saved.txt")
 	notes := []Note{}
+
+	if err == nil {
+		var datas []string = loadedData()
+		for _, data := range datas {
+			notes = append(notes, Note{ Content: data })
+		}
+	}
 
 	for {
 		command := ""
@@ -131,6 +176,7 @@ func main() {
 		} else if command == "exit" {
 			fmt.Println("Program is ended.")
 			clearTerminal()
+			savedData(notes)
 			break
 		} else {
 			clearTerminal()
