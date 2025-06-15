@@ -50,12 +50,12 @@ func main() {
 		fmt.Println("Go - Notes")
 
 		fmt.Println("------------------------")
-		
+
 		if len(notes) == 0 {
 			fmt.Println("> No notes")
 		} else {
 			for i, note := range notes {
-				fmt.Println("> " + strconv.Itoa(i + 1) + ") " + note.Content)
+				fmt.Println("> " + strconv.Itoa(i+1) + ") " + note.Content)
 			}
 		}
 
@@ -94,14 +94,14 @@ func main() {
 					continue
 				}
 				fmt.Println("Enter new content: ")
-				newContent, _ := reader.ReadString('\n') 
+				newContent, _ := reader.ReadString('\n')
 				newContent = strings.TrimSpace(newContent)
 				if editId != 0 {
 					for i, note := range notes {
-						if i + 1 != editId {
+						if i+1 != editId {
 							newNotes = append(newNotes, note)
 						} else {
-							newNotes = append(newNotes, Note{ Content: newContent })
+							newNotes = append(newNotes, Note{Content: newContent})
 						}
 					}
 					notes = newNotes
@@ -119,7 +119,7 @@ func main() {
 				}
 				if removeId != 0 {
 					for i, note := range notes {
-						if i + 1 != removeId {
+						if i+1 != removeId {
 							newNotes = append(newNotes, note)
 						}
 					}
